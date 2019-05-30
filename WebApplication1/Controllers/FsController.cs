@@ -19,13 +19,10 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public ActionResult display(string ip, string port)
         {
-            double lon, lat;
             int portInt = Int32.Parse(port);
             FlightManagerModel.Instance.connect(ip, portInt);
-            lon = FlightManagerModel.Instance.Lon;
-            Session["lon"] = lon;
-            lat = FlightManagerModel.Instance.Lat;
-            Session["lat"] = lat;
+            Session["lon"] = FlightManagerModel.Instance.Lon;
+            Session["lat"] = FlightManagerModel.Instance.Lat;
             return View();
         }
 
