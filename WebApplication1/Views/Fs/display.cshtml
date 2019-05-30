@@ -2,10 +2,11 @@
 @{
     ViewBag.Title = "display";
 }
-
+<link rel="stylesheet" type="text/css" href="colorgame.css">
 <body>
-
-    @Session["lat"].ToString()
+    <div id="container">
+        <div class="circle"> </div>
+    </div>
 </body>
 
 <script>
@@ -13,15 +14,19 @@
     var c = document.getElementById("canvasId");
     var lon = Session["lon"];
     var lat = Session["lat"];
+    var circle = document.querySelectorAll(".circle");
+    var circleDisplay = document.getElementById("Display");
     c.width = dimension[0];
     c.height = dimension[1];
     var lonNorm = (lon + 180) * (c.width / 360);
     var latNorm = (lat + 90) * (c.height / 180);
+    circleDisplay.style.lon = lonNorm;
+    circleDisplay.style.lat = latNorm;
 </script>
 
 
 <body>
-    <canvas id="myCanvas" style="border:20px solid black;"></canvas>
+    <!-- <canvas id="myCanvas" style="border:20px solid black;"></canvas>
     <script>
         var dimension = [document.documentElement.clientWidth, document.documentElement.clientHeight];
         var c = document.getElementById("canvasId");

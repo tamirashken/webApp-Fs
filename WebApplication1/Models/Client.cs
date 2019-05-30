@@ -34,13 +34,13 @@ namespace WebApplication1.Models
         {
             try
             {
-                stm = tcpClient.GetStream();
-                byte[] reader = new byte[256];
-                ASCIIEncoding asen = new ASCIIEncoding();
-                byte[] bytes = asen.GetBytes(command);
-                stm.Write(bytes, 0, bytes.Length);
-                stm.Read(reader, 0, reader.Length);
-                return asen.GetString(reader);
+                    stm = tcpClient.GetStream();
+                    byte[] reader = new byte[256];
+                    ASCIIEncoding asen = new ASCIIEncoding();
+                    byte[] bytes = asen.GetBytes(command);
+                    stm.Write(bytes, 0, bytes.Length);
+                    stm.Read(reader, 0, reader.Length);
+                    return asen.GetString(reader);            
             }
 
             catch (SocketException e)
