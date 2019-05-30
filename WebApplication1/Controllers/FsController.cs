@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
@@ -13,15 +14,18 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-
+        
         // GET: display
         [HttpGet]
         public ActionResult display(string ip, string port)
         {
-            //  double lon, lat;
-            // FlightManagerModel.Instance.connect(ip, port);
-            // lon =FlightManagerModel.Instance.getInfo("lon");
-            // lat = FlightManagerModel.Instance.getInfo("lat");
+            double lon, lat;
+            int portInt = Int32.Parse(port);
+            FlightManagerModel.Instance.connect(ip, portInt);
+            lon = FlightManagerModel.Instance.Lon;
+            lat = FlightManagerModel.Instance.Lat;
+            Console.WriteLine(lon);
+            Console.WriteLine(lat);
             return View();
         }
 

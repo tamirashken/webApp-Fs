@@ -21,12 +21,12 @@ namespace WebApplication1.Models
     public class FlightManagerModel
     {
         Client client;
-        TcpClient tcpClient;
         bool isClientConnected;
 
         #region Singleton
         private FlightManagerModel()
         {
+            this.client = new Client();
             this.isClientConnected = false;
         }
         private static FlightManagerModel m_Instance = null;
@@ -54,7 +54,10 @@ namespace WebApplication1.Models
         {
             get
             {
-                return client.write(Constants.LAT_STRING);
+                string latStr = client.write(Constants.LAT_STRING);
+                string[] latArr = latStr.Split('\'');
+                return Double.Parse(latArr[1]);
+
             }
             set { lat = value; }
         }
@@ -65,8 +68,9 @@ namespace WebApplication1.Models
         {
             get
             {
-                lon = client.write(Constants.LON_STRING);
-                return lon;
+                string lonStr = client.write(Constants.LON_STRING);
+                string[] lonArr = lonStr.Split('\'');
+                return Double.Parse(lonArr[1]);
             }
 
             set { lon = value; }
@@ -78,7 +82,9 @@ namespace WebApplication1.Models
 
         public void connect(string ip, int port)
         {
-            isClientConnected = client.connect(ip, port);
+            if (!isClientConnected) {
+                isClientConnected = client.connect(ip, port);
+            }
         }
 
         public void disconnectClient()
@@ -87,13 +93,6 @@ namespace WebApplication1.Models
         }
 
         //writing to FS through the client class.
-        public void getInfo(string command)
-        {
-            if (isClientConnected)
-            {
-
-            }
-        }
         ~FlightManagerModel()
         {
             client.disconnect();

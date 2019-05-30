@@ -30,18 +30,17 @@ namespace WebApplication1.Models
         }
 
         //writing to the flight simulator
-        public double write(string command)
+        public string write(string command)
         {
-            string temp;
             try
             {
                 stm = tcpClient.GetStream();
+                byte[] reader = new byte[256];
                 ASCIIEncoding asen = new ASCIIEncoding();
                 byte[] bytes = asen.GetBytes(command);
                 stm.Write(bytes, 0, bytes.Length);
-                stm.Read(bytes, 0, bytes.Length);
-                temp = asen.GetString(bytes);
-                return double.Parse(temp);
+                stm.Read(reader, 0, reader.Length);
+                return asen.GetString(reader);
             }
 
             catch (SocketException e)
@@ -52,7 +51,7 @@ namespace WebApplication1.Models
             {
                 Console.WriteLine("streamException: {0}", e);
             }
-            return 0;
+            return null;
         }
         //close the connection
         public void disconnect()
