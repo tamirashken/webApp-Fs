@@ -2,12 +2,17 @@
 @{
     ViewBag.Title = "display";
 }
-<html>
+
 <body>
-    <canvas id="myCanvas" width="200" height="100" style="border:80px solid black;"></canvas>
+    @Session["lat"].ToString()
+</body>
+<!--
+<body>
+    <canvas id="myCanvas" width="200" height="100" style="border:20px solid black;"></canvas>
+
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
     ctx.strokeStyle = "red";
     ctx.strokeRect(75, 25, 50, 50);
 </body>
-</html>
+-->

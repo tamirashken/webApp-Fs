@@ -23,9 +23,9 @@ namespace WebApplication1.Controllers
             int portInt = Int32.Parse(port);
             FlightManagerModel.Instance.connect(ip, portInt);
             lon = FlightManagerModel.Instance.Lon;
+            Session["lon"] = lon;
             lat = FlightManagerModel.Instance.Lat;
-            Console.WriteLine(lon);
-            Console.WriteLine(lat);
+            Session["lat"] = lat;
             return View();
         }
 
