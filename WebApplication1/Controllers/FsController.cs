@@ -14,10 +14,22 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        // GET: DisplayLocation
+        // GET: display
         [HttpGet]
         public ActionResult display(string ip, string port)
         {
+            //  double lon, lat;
+            // FlightManagerModel.Instance.connect(ip, port);
+            // lon =FlightManagerModel.Instance.getInfo("lon");
+            // lat = FlightManagerModel.Instance.getInfo("lat");
+            return View();
+        }
+
+        // GET: display
+        [HttpGet]
+        public ActionResult displayLines(string ip, string port, string time)
+        {
+            
             //  double lon, lat;
             // FlightManagerModel.Instance.connect(ip, port);
             // lon =FlightManagerModel.Instance.getInfo("lon");

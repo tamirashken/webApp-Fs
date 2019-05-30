@@ -24,6 +24,16 @@ namespace WebApplication1
             routes.MapRoute("display", "display/{ip}/{port}",
                 defaults: new { controller = "Fs", action = "display" }
             );
+
+            routes.MapRoute("displayLines", "display/{ip}/{port}/{time}",
+                defaults: new { controller = "Fs", action = "displayLines" }
+            );
+
+            routes.MapRoute(
+               name: "Default",
+               url: "{controller}/{action}/{id}",
+               defaults: new { controller = "Fs", action = "display", id = UrlParameter.Optional }
+            );
         }
     }
 }
