@@ -1,5 +1,11 @@
 ﻿body {
     background-image: url("./export-map-share.png");
+    background-size: 100% 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    /*
+    background-image: url("./export-map-share.png");
     background-size: cover;
     margin: 0;
+    */
 }

@@ -2,46 +2,44 @@
 @{
     ViewBag.Title = "display";
 }
-<link rel="stylesheet" type="text/css" href="colorgame.css">
+
 <body>
-    <div id="container">
-        <div class="circle"> </div>
-    </div>
+    <canvas id="myCanvas" style="border:9px solid black;"></canvas>
+    <script>
+        var c = document.getElementById("myCanvas");
+        c.width = document.documentElement.clientWidth;
+        c.height = document.documentElement.clientHeight;
+
+        var lon = Session["lon"]; 
+        var lonNorm = (lon + 180) * (c.width / 360);
+        var lat = Session["lat"];
+        var lonNorm = (lat + 180) * (c.heigt / 360);
+        var ctx = c.getContext("2d");
+        ctx.beginPath();
+        ctx.arc(300, 300, 90, 0, 2 * Math.PI);
+        ctx.lineWidth = 20;
+        ctx.lineStyle = 'black';
+        ctx.fillStyle = 'red';
+        ctx.fill();
+        ctx.stroke();
+
+    </script>
 </body>
 
+<!-- <canvas id="myCanvas" style="border:20px solid black;"></canvas>
 <script>
     var dimension = [document.documentElement.clientWidth, document.documentElement.clientHeight];
     var c = document.getElementById("canvasId");
     var lon = Session["lon"];
     var lat = Session["lat"];
-    var circle = document.querySelectorAll(".circle");
-    var circleDisplay = document.getElementById("Display");
     c.width = dimension[0];
     c.height = dimension[1];
     var lonNorm = (lon + 180) * (c.width / 360);
     var latNorm = (lat + 90) * (c.height / 180);
-    circleDisplay.style.lon = lonNorm;
-    circleDisplay.style.lat = latNorm;
+    document.getElementById("myCanvas").width = lonNorm;
+    document.getElementById("myCanvas").height = latNorm;
 </script>
-
-
-<body>
-    <!-- <canvas id="myCanvas" style="border:20px solid black;"></canvas>
-    <script>
-        var dimension = [document.documentElement.clientWidth, document.documentElement.clientHeight];
-        var c = document.getElementById("canvasId");
-        var lon = Session["lon"];
-        var lat = Session["lat"];
-        c.width = dimension[0];
-        c.height = dimension[1];
-        var lonNorm = (lon + 180) * (c.width / 360);
-        var latNorm = (lat + 90) * (c.height / 180);
-        document.getElementById("myCanvas").width = lonNorm;
-        document.getElementById("myCanvas").height = latNorm;
-    </script>
-    <!--var canvas = document.getElementById("myCanvas");
-    var ctx = canvas.getContext("2d");
-    ctx.strokeStyle = "red";
-    ctx.strokeRect(75, 25, 50, 50);-->
-</body>
-
+<!--var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+ctx.strokeStyle = "red";
+ctx.strokeRect(75, 25, 50, 50);-->
