@@ -156,6 +156,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Style\circle.css" />
     <Content Include="Style\FsStyles.css" />
     <Content Include="Style\export-map-share.png" />
     <Content Include="Web.config" />
