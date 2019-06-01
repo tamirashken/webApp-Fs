@@ -1,0 +1,14 @@
+﻿
+body {
+    margin: 0;
+}
+
+#circle {
+    width: 8px;
+    height:8px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+    border: 4px black;
+    background: red;
+}
