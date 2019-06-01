@@ -19,23 +19,34 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public ActionResult display(string ip, string port)
         {
-            int portInt = Int32.Parse(port);
+            int portInt = 0;
+            if (port != null && ip != null)
+            {
+                portInt = Int32.Parse(port);
+            }
             FlightManagerModel.Instance.connect(ip, portInt);
-            Session["lon"] = FlightManagerModel.Instance.Lon;
-            Session["lat"] = FlightManagerModel.Instance.Lat;
+            saveSessionsLonLat();
             return View();
         }
 
-        // GET: display
+        // GET: displayLines
         [HttpGet]
         public ActionResult displayLines(string ip, string port, string time)
         {
-            
-            //  double lon, lat;
-            // FlightManagerModel.Instance.connect(ip, port);
-            // lon =FlightManagerModel.Instance.getInfo("lon");
-            // lat = FlightManagerModel.Instance.getInfo("lat");
+            int portInt = 0;
+            if (port != null && ip != null)
+            {
+                portInt = Int32.Parse(port);
+            }
+            FlightManagerModel.Instance.connect(ip, portInt);
+            saveSessionsLonLat();
             return View();
+        }
+
+        public void saveSessionsLonLat()
+        {
+            Session["lon"] = FlightManagerModel.Instance.Lon;
+            Session["lat"] = FlightManagerModel.Instance.Lat;
         }
     }
 }

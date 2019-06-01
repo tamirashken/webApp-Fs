@@ -23,10 +23,19 @@ namespace WebApplication1.Models
         //connecting as a client
         public bool connect(string ip, int port)
         {
-            iPEndPoint = new IPEndPoint(IPAddress.Parse(ip), port);
-            tcpClient.Connect(iPEndPoint);
-            isConnect = true;
-            return true;
+            try
+            {
+                iPEndPoint = new IPEndPoint(IPAddress.Parse(ip), port);
+                tcpClient.Connect(iPEndPoint);
+                isConnect = true;
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("connection exception: {0}", e);
+                return false;
+            }
+            
         }
 
         //writing to the flight simulator
