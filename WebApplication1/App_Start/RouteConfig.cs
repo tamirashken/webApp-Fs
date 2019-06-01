@@ -13,19 +13,21 @@ namespace WebApplication1
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapRoute(
+               name: "Default",
+               url: "{controller}/{action}",
+               defaults: new { controller = "Fs", action = "Index" }
+            );
+
             routes.MapRoute("display", "display/{ip}/{port}",
                 defaults: new { controller = "Fs", action = "display" }
             );
 
-            routes.MapRoute("displayLines", "display/{ip}/{port}/{time}",
+            routes.MapRoute("displayLines", "display/{ip}/{port}/{seconds}",
                 defaults: new { controller = "Fs", action = "displayLines" }
             );
             
-            routes.MapRoute(
-               name: "Default",
-               url: "{controller}/{action}",
-               defaults: new { controller = "Fs", action = "Index"}
-            );
+            
             
         }
     }

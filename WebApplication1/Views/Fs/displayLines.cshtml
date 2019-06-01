@@ -3,5 +3,54 @@
     ViewBag.Title = "displayLines";
 }
 
-<h2>displayLines</h2>
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+</head>
+<body>
+    <canvas id="myCanvas"></canvas>
+    <script>
+        $(document).ready(function () {
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+            c.width = window.innerWidth;
+            c.height = window.innerHeight;
+            var lon;
+            var lat;
+            var hasCircle = false;
+            var lastLon;
+            var lastLat;
+            var IntervalTime = @Session["time"] * 1000
+            myTimer = (function () {
+                $.post("@Url.Action("GetLonLat")").done(function (drawLines) {
+                    lon = @Session["lon"];
+                    lat = @Session["lat"];
+                    var lonNorm = (lon + 180) * (window.innerWidth / 360);
+                    var latNorm = (lat + 90) * (window.innerHeight / 180);
+                    if (!hasCircle) {
+                        ctx.beginPath();
+                        ctx.arc(lonNorm, latNorm, 30, 0, 2 * Math.PI);
+                        ctx.lineWidth = 10;
+                        ctx.lineStyle = 'black';
+                        ctx.fillStyle = 'red';
+                        ctx.fill();
+                        ctx.stroke();
+                        hasCircle = true;
+                    } else {
+                        ctx.beginPath();
+                        ctx.lineWidth = 5;
+                        ctx.strokeStyle = 'red';
+                        ctx.moveTo(lastLon, lastLat);
+                        ctx.lineTo(lonNorm + 300, latNorm + 300);
+                        ctx.stroke();
+                    }
+                    lastLon = lon;
+                    lastLat = lat;
+                });
+            });
+            setInterval(myTimer, IntervalTime);
+            myTimer();
+        });
+
+    </script>
+</body>
 

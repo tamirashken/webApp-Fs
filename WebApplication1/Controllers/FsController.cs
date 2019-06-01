@@ -10,11 +10,12 @@ namespace WebApplication1.Controllers
     public class FsController : Controller
     {
         // GET: Fs
+        [HttpGet]
         public ActionResult Index()
         {
             return View();
         }
-        
+
         // GET: display
         [HttpGet]
         public ActionResult display(string ip, string port)
@@ -31,7 +32,7 @@ namespace WebApplication1.Controllers
 
         // GET: displayLines
         [HttpGet]
-        public ActionResult displayLines(string ip, string port, string time)
+        public ActionResult displayLines(string ip, string port, string seconds)
         {
             int portInt = 0;
             if (port != null && ip != null)
@@ -40,6 +41,7 @@ namespace WebApplication1.Controllers
             }
             FlightManagerModel.Instance.connect(ip, portInt);
             saveSessionsLonLat();
+            Session["time"] = seconds;
             return View();
         }
 
@@ -47,6 +49,12 @@ namespace WebApplication1.Controllers
         {
             Session["lon"] = FlightManagerModel.Instance.Lon;
             Session["lat"] = FlightManagerModel.Instance.Lat;
+        }
+
+        [HttpPost]
+        public void GetLonLat()
+        {
+            saveSessionsLonLat();
         }
     }
 }
