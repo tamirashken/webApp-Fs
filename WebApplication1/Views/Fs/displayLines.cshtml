@@ -19,13 +19,17 @@
             var hasCircle = false;
             var lastLon;
             var lastLat;
-            var IntervalTime = @Session["time"] * 1000
+            var IntervalTime = @Session["time"] * 1000   
+            var i = 1;
             myTimer = (function () {
                 $.post("@Url.Action("GetLonLat")").done(function (drawLines) {
+                    deltaLon = Math.floor(Math.random() * 300) - 150;
+                    deltaLat = Math.floor(Math.random() * 200) - 100;
                     lon = @Session["lon"];
                     lat = @Session["lat"];
-                    var lonNorm = (lon + 180) * (window.innerWidth / 360);
-                    var latNorm = (lat + 90) * (window.innerHeight / 180);
+                    i = i * -5
+                    var lonNorm = (lon + 180) * (window.innerWidth / 360) + deltaLon;
+                    var latNorm = (lat + 90) * (window.innerHeight / 180) + deltaLat;
                     if (!hasCircle) {
                         ctx.beginPath();
                         ctx.arc(lonNorm, latNorm, 30, 0, 2 * Math.PI);
@@ -40,11 +44,12 @@
                         ctx.lineWidth = 5;
                         ctx.strokeStyle = 'red';
                         ctx.moveTo(lastLon, lastLat);
-                        ctx.lineTo(lonNorm + 300, latNorm + 300);
+                        ctx.lineTo(lonNorm, latNorm);
                         ctx.stroke();
                     }
-                    lastLon = lon;
-                    lastLat = lat;
+                    lastLon = lonNorm;
+                    lastLat = latNorm;
+                    
                 });
             });
             setInterval(myTimer, IntervalTime);

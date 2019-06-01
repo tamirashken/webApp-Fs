@@ -15,7 +15,7 @@ namespace WebApplication1
 
             routes.MapRoute(
                name: "Default",
-               url: "{controller}/{action}",
+               url: "display",
                defaults: new { controller = "Fs", action = "Index" }
             );
 
@@ -23,12 +23,18 @@ namespace WebApplication1
                 defaults: new { controller = "Fs", action = "display" }
             );
 
-            routes.MapRoute("displayLines", "display/{ip}/{port}/{seconds}",
+            routes.MapRoute("displayLines", "display/{ip}/{port}/{freq}",
                 defaults: new { controller = "Fs", action = "displayLines" }
             );
+
+            routes.MapRoute("saveToFile", "save/{ip}/{port}/{freq}/{totalTime}/{fileName}",
+                defaults: new { controller = "Fs", action = "saveToFile" }
+            );
+
             
-            
-            
+
+
+
         }
     }
 }

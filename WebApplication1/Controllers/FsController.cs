@@ -32,16 +32,32 @@ namespace WebApplication1.Controllers
 
         // GET: displayLines
         [HttpGet]
-        public ActionResult displayLines(string ip, string port, string seconds)
+        public ActionResult displayLines(string ip, string port, string freq)
         {
             int portInt = 0;
             if (port != null && ip != null)
             {
                 portInt = Int32.Parse(port);
+                FlightManagerModel.Instance.connect(ip, portInt);
+                saveSessionsLonLat();
             }
-            FlightManagerModel.Instance.connect(ip, portInt);
-            saveSessionsLonLat();
-            Session["time"] = seconds;
+            Session["time"] = freq;
+            return View();
+        }
+
+        // GET: saveToFile
+        [HttpGet]
+        public ActionResult saveToFile(string ip, string port, string freq, string totalTime, string fileName)
+        {
+            int portInt = 0;
+            if (port != null && ip != null)
+            {
+                portInt = Int32.Parse(port);
+                FlightManagerModel.Instance.connect(ip, portInt);
+                saveSessionsLonLat();
+            }
+            Session["time"] = freq;
+            Session["totalTime"] = totalTime;
             return View();
         }
 
