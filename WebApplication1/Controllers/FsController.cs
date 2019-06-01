@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models;
+using System.Xml;
+using System.Text;
+using System.Net;
 
 namespace WebApplication1.Controllers
 {
@@ -20,14 +23,24 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public ActionResult display(string ip, string port)
         {
-            int portInt = 0;
-            if (port != null && ip != null)
+            IPAddress address;
+            //invalid ip adress
+            if (!IPAddress.TryParse(ip, out address))
             {
-                portInt = Int32.Parse(port);
+                //go to another function of load
+            } else
+            {
+                int portInt = 0;
+                if (port != null && ip != null)
+                {
+                    portInt = Int32.Parse(port);
+                }
+                FlightManagerModel.Instance.connect(ip, portInt);
+                saveSessionsLonLat();
+                
             }
-            FlightManagerModel.Instance.connect(ip, portInt);
-            saveSessionsLonLat();
             return View();
+
         }
 
         // GET: displayLines
@@ -45,21 +58,6 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        // GET: saveToFile
-        [HttpGet]
-        public ActionResult saveToFile(string ip, string port, string freq, string totalTime, string fileName)
-        {
-            int portInt = 0;
-            if (port != null && ip != null)
-            {
-                portInt = Int32.Parse(port);
-                FlightManagerModel.Instance.connect(ip, portInt);
-                saveSessionsLonLat();
-            }
-            Session["time"] = freq;
-            Session["totalTime"] = totalTime;
-            return View();
-        }
 
         public void saveSessionsLonLat()
         {
@@ -71,6 +69,30 @@ namespace WebApplication1.Controllers
         public void GetLonLat()
         {
             saveSessionsLonLat();
+        }
+
+        private string ToXml(FlightDetails flightDet)
+        {
+            //Initiate XML stuff
+            StringBuilder sb = new StringBuilder();
+            XmlWriterSettings settings = new XmlWriterSettings();
+            XmlWriter writer = XmlWriter.Create(sb, settings);
+            writer.WriteStartDocument();
+            writer.WriteStartElement("Your Flight Details:");
+            flightDet.ToXml(writer);
+            writer.WriteEndElement();
+            writer.WriteEndDocument();
+            writer.Flush();
+            return sb.ToString();
+        }
+
+
+        [HttpPost]
+        public string saveFlightDetails(string fileName)
+        {
+            FlightManagerModel.Instance.writeFlightDetails(fileName);
+            FlightManagerModel.Instance.newFlightDetails();
+            return ToXml(FlightManagerModel.Instance.FlightDetails);
         }
     }
 }

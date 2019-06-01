@@ -26,15 +26,6 @@ namespace WebApplication1
             routes.MapRoute("displayLines", "display/{ip}/{port}/{freq}",
                 defaults: new { controller = "Fs", action = "displayLines" }
             );
-
-            routes.MapRoute("saveToFile", "save/{ip}/{port}/{freq}/{totalTime}/{fileName}",
-                defaults: new { controller = "Fs", action = "saveToFile" }
-            );
-
-            
-
-
-
         }
     }
 }

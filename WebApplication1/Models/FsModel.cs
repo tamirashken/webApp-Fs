@@ -8,12 +8,14 @@ using System.IO;
 using System.Threading;
 
 
+
 static class Constants
 {
     public const string LON_STRING = "get /position/longitude-deg \r\n";
     public const string LAT_STRING = "get /position/latitude-deg \r\n";
-    public const string THROTTLE_STRING = "23";
-    public const string RUDDER_STRING = "21";
+    public const string THROTTLE_STRING = "get /controls/engines/current-engine/throttle \r\n";
+    public const string RUDDER_STRING = "get /controls/flight/rudder \r\n";
+    public const string SCENARIO_FILE = "~/App_Data/{0}.xml";           // The Path of the Secnario
 }
 namespace WebApplication1.Models
 {
@@ -38,16 +40,24 @@ namespace WebApplication1.Models
                 if (m_Instance == null)
                 {
                     m_Instance = new FlightManagerModel();
+
                 }
                 return m_Instance;
             }
         }
+
+        
         #endregion
         #region Properties
         /**
-         *  all notifies will be sent to the ViewModel beacuase the view model is the observer so it can check which property changed
-         *  and find 
+         *  
          */
+        public FlightDetails FlightDetails { get; private set; }
+
+        public void newFlightDetails()
+        {
+            FlightDetails = new FlightDetails();
+        }
 
         private double lat;
         public double Lat
@@ -75,10 +85,29 @@ namespace WebApplication1.Models
 
             set { lon = value; }
         }
-        public double Throttle { get; set; }
-        public double Rudder { get; set; }
+        public double Throttle {
+            get
+            {
+                string throttleStr = client.write(Constants.THROTTLE_STRING);
+                string[] throttleArr = throttleStr.Split('\'');
+                return Double.Parse(throttleArr[1]);
+            }
+        }
+
+       
+        public double Rudder
+        {
+            get
+            {
+                string rudderStr = client.write(Constants.RUDDER_STRING);
+                string[] rudderArr = rudderStr.Split('\'');
+                return Double.Parse(rudderArr[1]);
+            }
+        }
+
 
         #endregion
+
 
         public void connect(string ip, int port)
         {
@@ -87,9 +116,31 @@ namespace WebApplication1.Models
             }
         }
 
+
+
         public void disconnectClient()
         {
             client.disconnect();
+        }
+
+        public void writeFlightDetails(string fileName)
+        {
+            string path = HttpContext.Current.Server.MapPath(String.Format(Constants.SCENARIO_FILE, fileName));
+            if (!File.Exists(path))
+            {
+                FlightDetails.Lat = this.Lat.ToString();
+                FlightDetails.Lon = this.Lon.ToString();
+                FlightDetails.Throttle = this.Throttle.ToString();
+                FlightDetails.Rudder = this.Rudder.ToString();
+
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(path, true))
+                {
+                    file.WriteLine(FlightDetails.Lat);
+                    file.WriteLine(FlightDetails.Lon);
+                    file.WriteLine(FlightDetails.Throttle);
+                    file.WriteLine(FlightDetails.Rudder);
+                }
+            }
         }
 
         //writing to FS through the client class.

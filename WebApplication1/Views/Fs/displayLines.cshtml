@@ -6,6 +6,7 @@
 <head>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 </head>
+
 <body>
     <canvas id="myCanvas"></canvas>
     <script>
@@ -19,7 +20,7 @@
             var hasCircle = false;
             var lastLon;
             var lastLat;
-            var IntervalTime = @Session["time"] * 1000   
+            var IntervalTime = @Session["time"] * 1000
             var i = 1;
             myTimer = (function () {
                 $.post("@Url.Action("GetLonLat")").done(function (drawLines) {
@@ -49,7 +50,7 @@
                     }
                     lastLon = lonNorm;
                     lastLat = latNorm;
-                    
+
                 });
             });
             setInterval(myTimer, IntervalTime);
