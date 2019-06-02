@@ -1,7 +1,8 @@
 ﻿
 @{
-    ViewBag.Title = "displayLines";
+    ViewBag.Title = "saveFlightDetails";
 }
+
 
 <head>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
@@ -20,8 +21,9 @@
         var lastLon;
         var lastLat;
         var IntervalTime = @Session["time"] * 1000;
+        var totalTime = @Session["totalSec"] * 1000;
         myTimer = (function () {
-            $.post("@Url.Action("GetLonLat")").done(function (drawLines) {
+            $.post("@Url.Action("saveDetailsPost")").done(function (drawLines) {
                 deltaLon = Math.floor(Math.random() * 300) - 150;
                 deltaLat = Math.floor(Math.random() * 200) - 100;
                 lon = @Session["lon"];
@@ -48,9 +50,17 @@
                 lastLon = lonNorm;
                 lastLat = latNorm;
             });
+
         });
         setInterval(myTimer, IntervalTime);
         myTimer();
+
+        outTimer = (function () {
+            clearInterval(myTimer);
+            $.post("@Url.Action("saveAll")").done();
+        });
+        setTimeout(outTimer, totalTime);
+        outTimer();
     </script>
 </body>
 

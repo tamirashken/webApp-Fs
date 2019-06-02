@@ -131,7 +131,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Client.cs" />
-    <Compile Include="Models\FlightDetails.cs" />
+    <Compile Include="Models\FlightDetailsModel.cs" />
+    <Compile Include="Models\FlightDetailsWriter.cs" />
     <Compile Include="Models\FsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -176,9 +177,11 @@
     <Content Include="Views\Fs\Index.cshtml" />
     <Content Include="Views\Fs\display.cshtml" />
     <Content Include="Views\Fs\displayLines.cshtml" />
+    <Content Include="Views\Fs\saveFlightDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="FlightDetails\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

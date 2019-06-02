@@ -58,8 +58,26 @@ namespace WebApplication1.Controllers
             return View();
         }
 
+        // GET: displayLines
+        [HttpGet]
+        public ActionResult saveFlightDetails(string ip, string port, string freq, string totalSec, string fileName)
+        {
+            int portInt = 0;
+            if (port != null && ip != null)
+            {
+                portInt = Int32.Parse(port);
+                FlightManagerModel.Instance.connect(ip, portInt);
+                saveSessionsLonLat();
+            }
+            FlightDetailsModel.Instance.fileName = fileName;
+            FlightManagerModel.Instance.createFile(fileName);
+            Session["time"] = freq;
+            Session["totalSec"] = totalSec;
+            //Session["fileName"] = fileName.ToString();
+            return View();
+        }
 
-        public void saveSessionsLonLat()
+        private void saveSessionsLonLat()
         {
             Session["lon"] = FlightManagerModel.Instance.Lon;
             Session["lat"] = FlightManagerModel.Instance.Lat;
@@ -71,14 +89,15 @@ namespace WebApplication1.Controllers
             saveSessionsLonLat();
         }
 
-        private string ToXml(FlightDetails flightDet)
+
+        private string ToXml(FlightDetailsModel flightDet)
         {
             //Initiate XML stuff
             StringBuilder sb = new StringBuilder();
             XmlWriterSettings settings = new XmlWriterSettings();
             XmlWriter writer = XmlWriter.Create(sb, settings);
             writer.WriteStartDocument();
-            writer.WriteStartElement("Your Flight Details:");
+            writer.WriteStartElement("details");
             flightDet.ToXml(writer);
             writer.WriteEndElement();
             writer.WriteEndDocument();
@@ -88,11 +107,30 @@ namespace WebApplication1.Controllers
 
 
         [HttpPost]
-        public string saveFlightDetails(string fileName)
+        public void saveDetailsPost(string fileName)
         {
-            FlightManagerModel.Instance.writeFlightDetails(fileName);
-            FlightManagerModel.Instance.newFlightDetails();
-            return ToXml(FlightManagerModel.Instance.FlightDetails);
+            FlightDetailsModel.Instance.Lon = FlightManagerModel.Instance.Lon.ToString();
+            FlightDetailsModel.Instance.Lat = FlightManagerModel.Instance.Lat.ToString();
+            FlightDetailsModel.Instance.Throttle = FlightManagerModel.Instance.Throttle.ToString();
+            FlightDetailsModel.Instance.Rudder = FlightManagerModel.Instance.Rudder.ToString();
+            string s = ToXml(FlightDetailsModel.Instance);
+            if (FlightDetailsModel.Instance.Details != null)
+            {
+                s = s.Remove(0, s.IndexOf('>') + 1);
+            }
+            FlightDetailsModel.Instance.Details += s;
+            //Console.WriteLine("\n\n\n in func \n\n\n");
+            //saveSessionsLonLat();
+            //FlightManagerModel.Instance.writeFlightDetails();
+            //FlightManagerModel.Instance.newFlightDetails();
+            //return s;
+        }
+
+        [HttpPost]
+        public string saveAll()
+        {
+            FlightDetailsModel.Instance.appendToXml(FlightDetailsModel.Instance.Details);
+            return "flight details saved";
         }
     }
 }
