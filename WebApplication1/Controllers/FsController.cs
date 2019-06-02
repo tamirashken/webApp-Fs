@@ -73,7 +73,6 @@ namespace WebApplication1.Controllers
             FlightManagerModel.Instance.createFile(fileName);
             Session["time"] = freq;
             Session["totalSec"] = totalSec;
-            //Session["fileName"] = fileName.ToString();
             return View();
         }
 
@@ -119,11 +118,6 @@ namespace WebApplication1.Controllers
                 s = s.Remove(0, s.IndexOf('>') + 1);
             }
             FlightDetailsModel.Instance.Details += s;
-            //Console.WriteLine("\n\n\n in func \n\n\n");
-            //saveSessionsLonLat();
-            //FlightManagerModel.Instance.writeFlightDetails();
-            //FlightManagerModel.Instance.newFlightDetails();
-            //return s;
         }
 
         [HttpPost]
