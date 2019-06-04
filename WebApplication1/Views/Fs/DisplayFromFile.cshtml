@@ -23,9 +23,9 @@
     var normalLon = (FirstLon + 180) * (canvas.width / 360);
     var FirstLat = @ViewBag.FirstLat;
     var normalLat = (FirstLat + 90) * (canvas.height / 180);
-    ctx.arc(normalLon, normalLat, 5, 0, 2 * Math.PI);
+    ctx.arc(normalLon, normalLat, 15, 0, 2 * Math.PI);
     ctx.strokeStyle = "black";
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "white";
     ctx.fill();
     ctx.stroke();
     ctx.moveTo(normalLon, normalLat);
@@ -44,7 +44,7 @@
                 return;
             }
             var normalLon = (Lon + 180) * (canvas.width / 360);
-            var normalLat = (Lat + 90) * (canvas.height / 180);
+            var normalLat = (Lat + 90) * (canvas.height / 180); 
             ctx.lineTo(normalLon, normalLat);
             ctx.stroke();
             ctx.moveTo(normalLon, normalLat);
