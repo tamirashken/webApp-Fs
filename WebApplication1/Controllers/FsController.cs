@@ -76,7 +76,7 @@ namespace WebApplication1.Controllers
                 saveSessionsLonLat();
             }
             FlightDetailsModel.Instance.fileName = fileName;
-            FlightManagerModel.Instance.createFile(fileName);
+            //FlightManagerModel.Instance.createFile(fileName);
             Session["time"] = freq;
             Session["totalSec"] = totalSec;
             return View();
