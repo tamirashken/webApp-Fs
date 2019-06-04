@@ -15,7 +15,7 @@ static class Constants
     public const string LAT_STRING = "get /position/latitude-deg \r\n";
     public const string THROTTLE_STRING = "get /controls/engines/current-engine/throttle \r\n";
     public const string RUDDER_STRING = "get /controls/flight/rudder \r\n";
-    public const string SCENARIO_FILE = "~/FlightDetails/{0}.xml";           // The Path of the Secnario
+    public const string SCENARIO_FILE = "~/App_Data/{0}.xml";           // The Path of the Secnario
 }
 namespace WebApplication1.Models
 {
@@ -140,27 +140,6 @@ namespace WebApplication1.Models
             isClientConnected = false;
         }
 
-  /*      public void writeFlightDetails(string fileName)
-        {
-            string path = HttpContext.Current.Server.MapPath(String.Format(Constants.SCENARIO_FILE, fileName));
-            
-            if (!File.Exists(path))
-            {
-                FlightDetailsModel.Instance.Lat = (Instance.Lat).ToString();
-                FlightDetailsModel.Instance.Lon = (this.Lon).ToString();
-                FlightDetailsModel.Instance.Throttle = (this.Throttle).ToString();
-                FlightDetailsModel.Instance.Rudder = (this.Rudder).ToString();
-
-                using (System.IO.StreamWriter file = new System.IO.StreamWriter(path, true))
-                {
-                    file.WriteLine(FlightDetailsModel.Instance.Lat);
-                    file.WriteLine(FlightDetailsModel.Instance.Lon);
-                    file.WriteLine(FlightDetailsModel.Instance.Throttle);
-                    file.WriteLine(FlightDetailsModel.Instance.Rudder);
-                }
-            }
-        }
-*/
         public void createFile(string fileName)
         {
             string path = HttpContext.Current.Server.MapPath(String.Format(Constants.SCENARIO_FILE, fileName));

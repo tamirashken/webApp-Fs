@@ -1,0 +1,127 @@
+commit 97d2933d6883dadbe74912e2130758403de02e54
+Author: Tamir Ashkenazy <tamir.ashkenazy@live.biu.ac.il>
+Date:   Tue Jun 4 23:40:30 2019 +0300
+
+    done
+
+commit 67c92b54a3bf86810ed96dd705da4029ff184c6b
+Merge: 5cae8d9 aa2eb1c
+Author: michael reubinof <michael.reubinof@live.biu.ac.il>
+Date:   Tue Jun 4 22:57:58 2019 +0300
+
+    Merge branch 'master' of https://github.com/tamirashken/webApp-Fs
+
+commit aa2eb1cf9d197140985762d96a443b905ef9df36
+Author: Tamir Ashkenazy <tamir.ashkenazy@live.biu.ac.il>
+Date:   Tue Jun 4 22:50:51 2019 +0300
+
+    d
+
+commit 5cae8d9db8743f1d25f4e24c19e5ba9a69e26261
+Author: michael reubinof <michael.reubinof@live.biu.ac.il>
+Date:   Tue Jun 4 22:43:49 2019 +0300
+
+    work
+
+commit 69bf55416e50f346385adfcb7b0ed467977c8f54
+Author: Tamir Ashkenazy <tamir.ashkenazy@live.biu.ac.il>
+Date:   Sun Jun 2 23:40:55 2019 +0300
+
+    fixes
+
+commit 4dbfdb192d5965fb79f325d2ab829a0aac9c1167
+Author: Tamir Ashkenazy <tamir.ashkenazy@live.biu.ac.il>
+Date:   Sun Jun 2 23:33:39 2019 +0300
+
+    xml works
+
+commit ce06358129f6ce1281ae97d1664264677cd71974
+Author: Tamir Ashkenazy <tamir.ashkenazy@live.biu.ac.il>
+Date:   Sat Jun 1 16:25:24 2019 +0300
+
+    added some xml features
+
+commit e7a736e39b43f5af64bdc76471f36a2f30a69a54
+Author: Tamir Ashkenazy <tamir.ashkenazy@live.biu.ac.il>
+Date:   Sat Jun 1 13:36:22 2019 +0300
+
+    display lines
+
+commit 5104193e99d46defbe3390b7e78c2bf746f40ed9
+Author: Tamir Ashkenazy <tamir.ashkenazy@live.biu.ac.il>
+Date:   Sat Jun 1 10:57:23 2019 +0300
+
+    work on displayLines
+
+commit 22ed6517f0f8d1b2dc04b0395ea870aa6754f92b
+Merge: 3dd2da9 409f4fc
+Author: Tamir Ashkenazy <tamir.ashkenazy@live.biu.ac.il>
+Date:   Sat Jun 1 10:00:29 2019 +0300
+
+    circle css
+
+commit 3dd2da94e35b92fd03dc165bd42488fb14f2dd9e
+Author: Tamir Ashkenazy <tamir.ashkenazy@live.biu.ac.il>
+Date:   Sat Jun 1 09:52:42 2019 +0300
+
+    dot on the screen
+
+commit 409f4fc1ef15f15f9d878cc230677cced114ce86
+Author: michael reubinof <michael.reubinof@live.biu.ac.il>
+Date:   Fri May 31 12:30:31 2019 +0300
+
+    fuck this proj
+
+commit 4ca384e11f16f68fb7ccd0efba3eaa6c1c4d63e0
+Author: Tamir Ashkenazy <tamir.ashkenazy@live.biu.ac.il>
+Date:   Thu May 30 22:37:59 2019 +0300
+
+    not good
+
+commit 4aca677b2881797e371dc31aff8ae5d721b0efe6
+Author: michael reubinof <michael.reubinof@live.biu.ac.il>
+Date:   Thu May 30 21:08:40 2019 +0300
+
+    bfd
+
+commit 58f252eb2f03748a412bcc234c25e8da77e45649
+Author: Tamir Ashkenazy <tamir.ashkenazy@live.biu.ac.il>
+Date:   Thu May 30 19:14:28 2019 +0300
+
+    a
+
+commit ee0267f9a8180a658583966f0d4db4b0ed913bc6
+Author: Tamir Ashkenazy <tamir.ashkenazy@live.biu.ac.il>
+Date:   Thu May 30 18:42:05 2019 +0300
+
+    session works
+
+commit 3bb7558cd8e6461dfc3a88955a8f858cf857fbbd
+Author: Tamir Ashkenazy <tamir.ashkenazy@live.biu.ac.il>
+Date:   Thu May 30 17:54:45 2019 +0300
+
+    shows the map and connect to fs
+
+commit 91eabe3ba4bcbc4520b44d8c3d0224365efc0ac7
+Author: Tamir Ashkenazy <tamir.ashkenazy@live.biu.ac.il>
+Date:   Thu May 30 16:23:59 2019 +0300
+
+    added time
+
+commit 339e6aff371af94c784bbb55cdf20d96ba61ccfd
+Author: Tamir Ashkenazy <tamir.ashkenazy@live.biu.ac.il>
+Date:   Thu May 30 16:15:32 2019 +0300
+
+    work
+
+commit f32b028bcfad54b4cdf71a84b0b98d67803636ff
+Author: Tamir Ashkenazy <tamir.ashkenazy@live.biu.ac.il>
+Date:   Thu May 30 15:12:31 2019 +0300
+
+    Add project files.
+
+commit 1c18df29ee4c267a2540b8f0437010ead18c7bf0
+Author: Tamir Ashkenazy <tamir.ashkenazy@live.biu.ac.il>
+Date:   Thu May 30 15:12:29 2019 +0300
+
+    Add .gitignore and .gitattributes.
