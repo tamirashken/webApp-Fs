@@ -21,7 +21,7 @@
         var lastLat;
         var IntervalTime = @Session["time"] * 1000;
         myTimer = (function () {
-            $.post("@Url.Action("GetLonLat")").done(function (drawLines) {
+            $.post("@Url.Action("GetLonLat")").done(function () {
                 deltaLon = Math.floor(Math.random() * 300) - 150;
                 deltaLat = Math.floor(Math.random() * 200) - 100;
                 lon = @Session["lon"];

@@ -17,7 +17,7 @@ namespace WebApplication1.Models
         bool isConnect;
         public Client()
         {
-            this.tcpClient = new TcpClient();
+           
             this.isConnect = false;
         }
         //connecting as a client
@@ -25,6 +25,7 @@ namespace WebApplication1.Models
         {
             try
             {
+                this.tcpClient = new TcpClient();
                 iPEndPoint = new IPEndPoint(IPAddress.Parse(ip), port);
                 tcpClient.Connect(iPEndPoint);
                 isConnect = true;

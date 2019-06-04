@@ -28,6 +28,7 @@ namespace WebApplication1.Controllers
             if (!IPAddress.TryParse(ip, out address))
             {
                 //go to another function of load
+                return RedirectToAction("DisplayFromFile", new { fileName = ip, rate = port });
             } else
             {
                 int portInt = 0;
@@ -35,9 +36,13 @@ namespace WebApplication1.Controllers
                 {
                     portInt = Int32.Parse(port);
                 }
-                FlightManagerModel.Instance.connect(ip, portInt);
+               if(!FlightManagerModel.Instance.connect(ip, portInt))
+                {
+                    return RedirectToAction("Error");
+                }
                 saveSessionsLonLat();
-                
+                FlightManagerModel.Instance.disconnectClient();
+
             }
             return View();
 
@@ -53,6 +58,7 @@ namespace WebApplication1.Controllers
                 portInt = Int32.Parse(port);
                 FlightManagerModel.Instance.connect(ip, portInt);
                 saveSessionsLonLat();
+                //FlightManagerModel.Instance.disconnectClient();
             }
             Session["time"] = freq;
             return View();
@@ -76,6 +82,24 @@ namespace WebApplication1.Controllers
             return View();
         }
 
+        /*
+       * The ActionResults directs to "FlightDetailsFile" view, which displays the plane route on the map
+       * given his coordinates from given file name, each given number of seconds
+       */
+        [HttpGet]
+        public ActionResult DisplayFromFile(string fileName, string rate)
+        {
+            FlightManagerModel.Instance.disconnectClient();
+            var infoFileModel = FlightManagerModel.Instance;
+            infoFileModel.Read(fileName);
+            ViewBag.FirstLon = FlightManagerModel.Instance.getNextLon();
+            ViewBag.FirstLat = FlightManagerModel.Instance.getNextLat();
+            ViewBag.rate = rate;
+            
+            return View("DisplayFromFile");
+        }
+
+
         private void saveSessionsLonLat()
         {
             Session["lon"] = FlightManagerModel.Instance.Lon;
@@ -96,12 +120,39 @@ namespace WebApplication1.Controllers
             XmlWriterSettings settings = new XmlWriterSettings();
             XmlWriter writer = XmlWriter.Create(sb, settings);
             writer.WriteStartDocument();
-            writer.WriteStartElement("details");
+            writer.WriteStartElement("line");
             flightDet.ToXml(writer);
             writer.WriteEndElement();
             writer.WriteEndDocument();
             writer.Flush();
             return sb.ToString();
+        }
+
+        public string stringToXml(string coordinates)
+        {
+            StringBuilder sb = new StringBuilder();
+            XmlWriterSettings settings = new XmlWriterSettings();
+            XmlWriter writer = XmlWriter.Create(sb, settings);
+            writer.WriteStartDocument();
+            writer.WriteStartElement("coordinates");
+            // split the string by spaces.
+            string[] temp = coordinates.Split(' ');
+            // fill values to fields in XML.
+            writer.WriteElementString("Lon", temp[0]);
+            writer.WriteElementString("Lat", temp[1]);
+            writer.WriteEndElement();
+            writer.WriteEndDocument();
+            writer.Flush();
+            // stringify the XML.
+            return sb.ToString();
+        }
+
+        [HttpPost]
+        public string loadDetailsPost()
+        {
+            string Lon = FlightManagerModel.Instance.getNextLon();
+            string Lat = FlightManagerModel.Instance.getNextLat();
+            return stringToXml(Lon + " " + Lat);
         }
 
 

@@ -6,8 +6,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.IO;
 using System.Threading;
-
-
+using System.Xml.Serialization;
+using System.Xml;
 
 static class Constants
 {
@@ -19,16 +19,22 @@ static class Constants
 }
 namespace WebApplication1.Models
 {
+
+
     //should be singletone
     public class FlightManagerModel
     {
         Client client;
+        IList<string> lons;
+        IList<String> lats;
         bool isClientConnected;
         #region Singleton
         private FlightManagerModel()
         {
             this.client = new Client();
             this.isClientConnected = false;
+            lons = new List<string>();
+            lats = new List<String>();
         }
 
         private static FlightManagerModel m_Instance = null;
@@ -52,7 +58,7 @@ namespace WebApplication1.Models
         /**
          *  
          */
-        public FlightDetailsWriter fsWriter { get; set; }
+        //public FlightDetailsWriter fsWriter { get; set; }
     
       
         
@@ -75,9 +81,16 @@ namespace WebApplication1.Models
         {
             get
             {
-                string lonStr = client.write(Constants.LON_STRING);
-                string[] lonArr = lonStr.Split('\'');
-                return Double.Parse(lonArr[1]);
+                try
+                {
+                    string lonStr = client.write(Constants.LON_STRING);
+                    string[] lonArr = lonStr.Split('\'');
+                    return Double.Parse(lonArr[1]);
+                }
+                catch (Exception)
+                {
+                    return -1000;
+                }
             }
 
             set { lon = value; }
@@ -101,16 +114,22 @@ namespace WebApplication1.Models
                 return Double.Parse(rudderArr[1]);
             }
         }
-
+        public string[] dataFromFile { get; set; }
 
         #endregion
 
 
-        public void connect(string ip, int port)
+        public bool connect(string ip, int port)
         {
             if (!isClientConnected) {
                 isClientConnected = client.connect(ip, port);
             }
+            return isClientConnected;
+        }
+
+        public string getLine()
+        {
+            return dataFromFile[0];
         }
 
 
@@ -118,9 +137,10 @@ namespace WebApplication1.Models
         public void disconnectClient()
         {
             client.disconnect();
+            isClientConnected = false;
         }
 
-        public void writeFlightDetails(string fileName)
+  /*      public void writeFlightDetails(string fileName)
         {
             string path = HttpContext.Current.Server.MapPath(String.Format(Constants.SCENARIO_FILE, fileName));
             
@@ -140,13 +160,59 @@ namespace WebApplication1.Models
                 }
             }
         }
-
+*/
         public void createFile(string fileName)
         {
             string path = HttpContext.Current.Server.MapPath(String.Format(Constants.SCENARIO_FILE, fileName));
-            if (!System.IO.File.Exists(path))
+            if (System.IO.File.Exists(path))
             {
-                System.IO.File.Create(path);  
+                System.IO.File.Delete(path);
+            }
+            System.IO.File.Create(path);
+        }
+
+        /*
+ *The function reads all data of planes location to the array 
+ */
+        public void Read(string fileName)
+        {
+            
+            string path = HttpContext.Current.Server.MapPath(String.Format(Constants.SCENARIO_FILE, fileName));
+
+            string[] temp = System.IO.File.ReadAllLines(path);
+            string[] data = temp[0].Split(',');
+            for(int i = 1; i < data.Length - 1; i += 5)
+            {
+                lons.Add(data[i]);
+                lats.Add(data[i+1]);
+            }
+        }
+
+        public string getNextLon()
+        {
+            if (this.lons.Count > 0)
+            {
+                string temp = this.lons.ElementAt(0);
+                this.lons.RemoveAt(0);
+                return temp;
+            }
+            else
+            {
+                return "-1000";
+            }
+        }
+
+        public string getNextLat()
+        {
+            if (this.lats.Count > 0)
+            {
+                string temp = this.lats.ElementAt(0);
+                this.lats.RemoveAt(0);
+                return temp;
+            }
+            else
+            {
+                return "-1000";
             }
         }
 

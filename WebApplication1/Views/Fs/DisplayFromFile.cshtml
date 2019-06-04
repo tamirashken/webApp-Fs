@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "DisplayFromFile";
+}
+
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+</head>
+<canvas id="myCanvas"> </canvas>
+
+<body>
+    <script>
+    var canvas = document.getElementById("myCanvas");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    var ctx = canvas.getContext("2d");
+    ctx.canvas.width = canvas.width;
+    ctx.canvas.height = canvas.height;
+    ctx.beginPath();
+    var UpdateRate = @ViewBag.rate;
+    var intervalTime = UpdateRate * 1000;
+    var FirstLon = @ViewBag.FirstLon;
+    var normalLon = (FirstLon + 180) * (canvas.width / 360);
+    var FirstLat = @ViewBag.FirstLat;
+    var normalLat = (FirstLat + 90) * (canvas.height / 180);
+    ctx.arc(normalLon, normalLat, 5, 0, 2 * Math.PI);
+    ctx.strokeStyle = "black";
+    ctx.fillStyle = "red";
+    ctx.fill();
+    ctx.stroke();
+    ctx.moveTo(normalLon, normalLat);
+
+    displayAirplane = (function () {
+        $.post("@Url.Action("loadDetailsPost")").done(function (xml) {
+            var xmlDoc = $.parseXML(xml),
+            $xml = $(xmlDoc),
+            Lon = $xml.find("Lon").text();
+            Lat = $xml.find("Lat").text();
+            Lon = parseFloat(Lon.valueOf());
+            Lat = parseFloat(Lat.valueOf());
+            if (Lon == -1000) {
+                alert("Done: thank you for watching!")
+                clearInterval(id);
+                return;
+            }
+            var normalLon = (Lon + 180) * (canvas.width / 360);
+            var normalLat = (Lat + 90) * (canvas.height / 180);
+            ctx.lineTo(normalLon, normalLat);
+            ctx.stroke();
+            ctx.moveTo(normalLon, normalLat);
+        });
+   });
+    id = setInterval(displayAirplane, intervalTime);
+    </script>
+</body>

@@ -177,6 +177,8 @@
     <Content Include="Views\Fs\display.cshtml" />
     <Content Include="Views\Fs\displayLines.cshtml" />
     <Content Include="Views\Fs\saveFlightDetails.cshtml" />
+    <Content Include="Views\Fs\DisplayFromFile.cshtml" />
+    <Content Include="Views\Fs\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
